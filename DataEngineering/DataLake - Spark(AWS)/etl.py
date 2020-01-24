@@ -6,6 +6,7 @@ from pyspark.sql.functions import udf, col
 from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, date_format
 
 
+
 config = configparser.ConfigParser()
 config.read('dl.cfg')
 
@@ -26,16 +27,16 @@ def process_song_data(spark, input_data, output_data):
     song_data = 
     
     # read song data file
-    df = 
+    df = spark.read.json(song_data)
 
     # extract columns to create songs table
-    songs_table = 
+    songs_table = df.select('song_id','title', 'artist_id', 'year', 'duration').distinct()
     
     # write songs table to parquet files partitioned by year and artist
     songs_table
 
     # extract columns to create artists table
-    artists_table = 
+    artists_table = df.select('artist_id', 'artist_name', 'artist_location', 'artist_latitude', 'artist_longitude' ).distinct()
     
     # write artists table to parquet files
     artists_table
@@ -46,16 +47,16 @@ def process_log_data(spark, input_data, output_data):
     log_data =
 
     # read log data file
-    df = 
+    df = spark.read.json(song_data)
     
     # filter by actions for song plays
-    df = 
+    df = df.where(log_data['page'] == 'NextSong')
 
     # extract columns for users table    
-    artists_table = 
+    users_table = df.select('userid', 'firstname', 'lastname', 'gender', 'level' ).distinct()
     
     # write users table to parquet files
-    artists_table
+    users_table
 
     # create timestamp column from original timestamp column
     get_timestamp = udf()

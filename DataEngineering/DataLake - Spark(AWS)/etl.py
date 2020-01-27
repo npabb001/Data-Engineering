@@ -76,7 +76,8 @@ def process_log_data(spark, input_data, output_data):
     song_df = spark.read.parquet("songs")
 
     # extract columns from joined song and log datasets to create songplays table 
-    songplays_table = 
+    songplays_table = song_df.join(df, df.song == song_df.title).selectExpr('datetime as start_time', 'userId as user_id', 'level', 'song_id', 'artist_id', 'sessionId as session_id', 'location', "userAgent as user_agent")
+    songplays_table = songplays_table.withColumn('songplays_id',F.monotonically_increasing_id())
 
     # write songplays table to parquet files partitioned by year and month
     songplays_table.write.partitionBy("year", "month").parquet("songplays")
@@ -84,7 +85,7 @@ def process_log_data(spark, input_data, output_data):
 
 def main():
     spark = create_spark_session()
-    input_data = "s3a://udacity-dend/"
+    input_data = "data/"
     output_data = ""
     
     process_song_data(spark, input_data, output_data)    
@@ -93,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+https://s3.console.aws.amazon.com/s3/buckets/udacity-dend/song-data/

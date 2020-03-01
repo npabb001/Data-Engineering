@@ -11,8 +11,8 @@ from pyspark.sql.functions import year, month, dayofmonth, hour, weekofyear, dat
 #config = configparser.ConfigParser()
 #config.read('dl.cfg')
 
-os.environ['AWS_ACCESS_KEY_ID']='AKIAY3SFG3DAV54APKSN'
-os.environ['AWS_SECRET_ACCESS_KEY']='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'
+os.environ['AWS_ACCESS_KEY_ID']=''
+os.environ['AWS_SECRET_ACCESS_KEY']=''
 
 
 def create_spark_session():

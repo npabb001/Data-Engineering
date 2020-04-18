@@ -1,0 +1,16 @@
+
+We did this through the following steps:
+
+We converted an existing Parquet-based data lake table to a Delta table, health_tracker_silver.
+
+We performed a batch upload of new data to this table.
+
+We used Spark SQL to identify broken and missing records in this table.
+
+We used Delta Lake’s ability to do an upsert, where we updated broken records and inserted missing records.
+
+We used Delta Lake’s Time Travel feature to scrub the personal data of a user intelligently.
+
+Additionally, we used Delta Lake to create an aggregate table, health_tracker_user_analytics, downstream from the health_tracker_silver table.
+
+Gold tables cretaed out of the Silver tables for each device seperatelty (Individual marts for each device).
